@@ -17,31 +17,37 @@ $(document).ready(function() {
     function validateStep(step) {
         let isValid = true;
         $("#step" + step + " [required]").each(function() {
-            $(this).removeClass("error-border"); // Remover borde de error previo
-            if ($(this).is(':visible')) { // Solo validar campos visibles
-                if ($(this).is('select') && $(this).val() === "") {
-                    isValid = false;
-                    $(this).addClass("error-border");
-                } else if ($(this).is('input[type="checkbox"]') && !$(this).is(':checked')) {
-                    // Podríamos añadir validación específica para checkboxes si es 'required'
-                    // y no está marcado, pero el atributo 'required' en checkbox
-                    // ya es manejado por el navegador si el form se submite.
-                    // Para validación custom por JS, se haría aquí.
-                    // Por ahora, si un checkbox es 'required' y no está marcado,
-                    // la validación fallará si se implementa abajo.
-                } else if ($(this).val() === "") {
-                    isValid = false;
-                    $(this).addClass("error-border");
+            const field = $(this);
+            field.removeClass("error-border");
+
+            if (field.is(':visible')) {
+                let fieldIsEmpty = false;
+                if (field.is('select')) {
+                    fieldIsEmpty = (field.val() === "");
+                } else if (field.is('input[type="checkbox"]')) {
+                    fieldIsEmpty = !field.is(':checked');
+                } else {
+                    fieldIsEmpty = (field.val().trim() === "");
                 }
 
-                // Validación específica para correo
-                if ($(this).attr("type") === "email" && $(this).val() !== "") {
-                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailPattern.test($(this).val())) {
-                        isValid = false;
-                        $(this).addClass("error-border");
-                        // Podríamos agregar un mensaje de error específico
-                        // $(this).after('<small class="text-danger">Correo inválido.</small>');
+                if (fieldIsEmpty) {
+                    isValid = false;
+                    field.addClass("error-border");
+                } else {
+                    // Validaciones específicas si el campo no está vacío
+                    if (field.attr("type") === "email") {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(field.val())) {
+                            isValid = false;
+                            field.addClass("error-border");
+                        }
+                    } else if (field.attr("id") === "numeroContrato") {
+                        const value = field.val();
+                        const alphanumericRegex = /^[a-z0-9]+$/i; // Solo alfanuméricos
+                        if (value.length < 8 || value.length > 12 || !alphanumericRegex.test(value)) {
+                            isValid = false;
+                            field.addClass("error-border");
+                        }
                     }
                 }
             }

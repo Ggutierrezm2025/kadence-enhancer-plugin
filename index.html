@@ -39,15 +39,21 @@
                         <div class="form-group row">
                             <label for="numeroContrato" class="col-sm-5 col-form-label">Número de contrato</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="numeroContrato" name="numeroContrato" placeholder="Número de contrato" required>
-                                <small class="form-text text-muted text-left">Escriba el número del contrato.</small>
+                                <input type="text" class="form-control" id="numeroContrato" name="numeroContrato" placeholder="Ej: FUN2025A004 (8-12 alfanum.)" required>
+                                <small class="form-text text-muted text-left">Escriba el número del contrato (8-12 caracteres alfanuméricos).</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="codigoEmpresa" class="col-sm-5 col-form-label">Código de empresa</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="codigoEmpresa" name="codigoEmpresa" placeholder="Código de empresa" required>
-                                <small class="form-text text-muted text-left">Escriba el código de empresa.</small>
+                                <select class="form-control" id="codigoEmpresa" name="codigoEmpresa" required>
+                                    <option value="">Seleccione código...</option>
+                                    <option value="EMP001">EMP001 - Empresa Alfa</option>
+                                    <option value="EMP002">EMP002 - Empresa Beta</option>
+                                    <option value="EMP003">EMP003 - Empresa Gamma</option>
+                                    <option value="OTRO">OTRO - Otra (no listada)</option>
+                                </select>
+                                <small class="form-text text-muted text-left">Seleccione el código de la empresa.</small>
                             </div>
                         </div>
                         <div class="form-group row">
